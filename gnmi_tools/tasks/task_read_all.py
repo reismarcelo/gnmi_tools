@@ -15,9 +15,9 @@ from gnmi_tools.utils import TaskOptions
 from gnmi_tools.api_update import GNMIManagerV2
 
 
-@TaskOptions.register('read_banner')
+@TaskOptions.register('read_all')
 def run(api: GNMIManagerV2):
-    get_complete, response_list = api.get_config(['Cisco-IOS-XR-infra-infra-cfg:banners/banner'])
+    get_complete, response_list = api.get_config()
     if not get_complete:
         return 'Error on get_config'
 
