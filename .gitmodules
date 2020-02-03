@@ -1,0 +1,3 @@
+[submodule "gnmi_api"]
+	path = gnmi_api
+	url = https://github.com/GregoryBrown/gNMI-API
