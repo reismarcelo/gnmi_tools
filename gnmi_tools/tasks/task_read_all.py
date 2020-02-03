@@ -21,4 +21,4 @@ def run(api: GNMIManagerV2):
     if not get_complete:
         return 'Error on get_config'
 
-    return '\n'.join([json.dumps(response.json_response, indent=2) for response in response_list])
+    return '\n'.join([json.dumps(response.json, indent=2) for response in response_list])
