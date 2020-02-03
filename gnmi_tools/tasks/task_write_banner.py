@@ -24,17 +24,15 @@ def run(api: GNMIManagerV2):
             "banner": [
                 {
                     "banner-name": "motd", 
-                    "banner-text": "c This is a test json banner c"
+                    "banner-text": "# Yet Another Banner #"
                 }
             ]
         }
     }
     '''
-    set_request = ParsedSetRequest(json.loads(json_request))
-    print(set_request)
-    set_complete, response_list = api.set(set_request.update_request)
+    set_complete, set_response = api.set(ParsedSetRequest(json.loads(json_request)).update_request)
     if not set_complete:
         return 'Error on set'
 
-    return '\n'.join([json.dumps(response.json, indent=2) for response in response_list])
+    return '\n'.join([f'{response.path}: {response.op}' for response in set_response.response])
 
