@@ -112,17 +112,12 @@ def main():
 
     logger.info('Target: %s, %s', cli_args.address, 'TLS' if device_cert is not None else 'NO_TLS')
 
-    api = GNMIManagerV2(cli_args.address,
-                        cli_args.user,
-                        cli_args.password,
-                        str(GNMI_PORT),
-                        str(device_cert) if device_cert is not None else '')
-
-    api.connect()
-    if api.is_connected:
+    with GNMIManagerV2(cli_args.address, cli_args.user, cli_args.password, str(GNMI_PORT),
+                       str(device_cert) if device_cert is not None else '') as api:
         # Dispatch task to the appropriate handler
         result = cli_args.task(api)
         print(result)
+
 
 
 

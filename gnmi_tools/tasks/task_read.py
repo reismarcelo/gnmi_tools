@@ -10,14 +10,16 @@
             +--rw banner-name    Banner
             +--rw banner-text    string
 """
+import json
 from gnmi_tools.utils import TaskOptions
 from gnmi_tools.api_update import GNMIManagerV2
 
 
 @TaskOptions.register('read_banner')
 def run(api: GNMIManagerV2):
-    get_complete, response = api.get_config(['Cisco-IOS-XR-infra-infra-cfg:banners'])
-    if get_complete:
-        return '\n'.join([str(item) for item in response])
+    get_complete, response_list = api.get_config(['Cisco-IOS-XR-infra-infra-cfg:banners'])
+    if not get_complete:
+        return 'Error on get_config'
 
-    return 'Not complete'
+    return '\n'.join([json.dumps(response.json_response, indent=2) for response in response_list])
+
