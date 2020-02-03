@@ -20,26 +20,18 @@ from gnmi_api.responses import ParsedSetRequest
 def run(api: GNMIManagerV2):
     json_request = '''
     {
-        "update": {
-            "path": {
-                "elem": {
-                    "name": "Cisco-IOS-XR-infra-infra-cfg:banners"
+        "Cisco-IOS-XR-infra-infra-cfg:banners": {
+            "banner": [
+                {
+                    "banner-name": "motd", 
+                    "banner-text": "c This is a test json banner c"
                 }
-            },
-            "val": {
-                "json_ietf_val": {
-                    "banner": [
-                        {
-                            "banner-name": "motd", 
-                            "banner-text": "c This is a test json banner c"
-                        }
-                    ]
-                }
-            }
+            ]
         }
     }
     '''
     set_request = ParsedSetRequest(json.loads(json_request))
+    print(set_request)
     set_complete, response_list = api.set(set_request.update_request)
     if not set_complete:
         return 'Error on set'
