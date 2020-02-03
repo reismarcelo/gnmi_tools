@@ -20,8 +20,8 @@ class GNMIManagerV2(gNMIManager):
 
             grpc.channel_ready_future(self.channel).result(timeout=10)
             self._connected = True
-        except grpc.FutureTimeoutError as e:
-            raise GNMIException(f'Unable to connect to "{self.host}:{self.port}": {e}')
+        except grpc.FutureTimeoutError:
+            raise GNMIException(f'Unable to connect to "{self.host}:{self.port}"')
 
     def __enter__(self):
         self.connect()
