@@ -3,10 +3,6 @@
  gnmi_tools.cmd
  This module implements the command-line parser
 """
-import sys
-sys.path.append('../gnmi_api/protos')
-sys.path.append('../gnmi_api')
-
 import logging
 import logging.config
 import logging.handlers

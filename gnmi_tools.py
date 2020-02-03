@@ -5,6 +5,8 @@ gnmi_tools - Basic GNMI operations on a device
 """
 import re
 import sys
+sys.path.append('gnmi_api/protos')
+sys.path.append('gnmi_api')
 
 from gnmi_tools.cmd import main
 
