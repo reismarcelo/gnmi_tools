@@ -10,14 +10,16 @@
             +--rw banner-name    Banner
             +--rw banner-text    string
 """
-import json
+import logging
 from gnmi_tools.utils import TaskOptions
 from gnmi_tools.api_update import GNMIManagerV2
-from gnmi_api.responses import ParsedSetRequest
 
+TIME_BUDGET = 300
 
 @TaskOptions.register('subscribe')
 def run(api: GNMIManagerV2):
+    logger = logging.getLogger('subscribe')
+
     subs = api.subscribe(
         requests=['openconfig-network-instance:network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor'],
         encoding='PROTO',
@@ -25,7 +27,10 @@ def run(api: GNMIManagerV2):
         stream_mode='STREAM',
         subscribe_mode='SAMPLE'
     )
+
+    time_budget = TIME_BUDGET
     for sample in subs:
+        logger.info('Got new sample')
         print(sample)
 
     return 'Completed'
