@@ -1,9 +1,9 @@
 """
  gnmi_tools - Basic GNMI operations on a device
  gnmi_tools.tasks.task_subscribe
- Performs a banner write operation
+ Performs subscribe operation operation
 
- Banner model:
+ OC model:
     module: Cisco-IOS-XR-infra-infra-cfg
       +--rw banners
          +--rw banner* [banner-name]
@@ -11,10 +11,13 @@
             +--rw banner-text    string
 """
 import logging
+import time
 from gnmi_tools.utils import TaskOptions
 from gnmi_tools.api_update import GNMIManagerV2
 
+# TIME_BUDGET indicates how many seconds the subscriber will be on the subscription loop
 TIME_BUDGET = 300
+
 
 @TaskOptions.register('subscribe')
 def run(api: GNMIManagerV2):
@@ -29,9 +32,18 @@ def run(api: GNMIManagerV2):
     )
 
     time_budget = TIME_BUDGET
+    ts_last = time.time()
+    sample_list = []
     for sample in subs:
-        logger.info('Got new sample')
-        print(sample)
+        ts_new = time.time()
+        time_budget -= ts_new - ts_last
+        ts_last = ts_new
+        if time_budget < 0:
+            logger.info('Time budget expired, closing subscription')
+            break
 
-    return 'Completed'
+        logger.info(sample)
+        sample_list.append(sample)
+
+    return '\n'.join(sample_list)
 
