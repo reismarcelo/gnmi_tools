@@ -12,19 +12,8 @@
                   +--rw bgp
                      +--rw neighbors
                         +--rw neighbor* [neighbor-address]
-                           +--ro state
-                              +--ro neighbor-address?   oc-inet:ip-address
+                        ...
 
-    module: openconfig-network-instance
-      +--rw network-instances
-         +--rw network-instance* [name]
-            +--rw protocols
-               +--rw protocol* [identifier name]
-                  +--rw bgp
-                     +--rw neighbors
-                        +--rw neighbor* [neighbor-address]
-                           +--ro state
-                              +--ro session-state?   enumeration
 """
 import logging
 import time
@@ -41,8 +30,7 @@ def run(api: GNMIManagerV2):
 
     subs = api.subscribe(
         requests=[
-            'openconfig-network-instance:network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/neighbor-address',
-            'openconfig-network-instance:network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state',
+            'openconfig-network-instance:network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor',
         ],
         encoding='PROTO',
         sample_rate=5,
