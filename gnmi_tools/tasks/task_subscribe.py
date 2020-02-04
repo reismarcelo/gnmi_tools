@@ -20,7 +20,7 @@ from gnmi_api.responses import ParsedSetRequest
 def run(api: GNMIManagerV2):
     subs = api.subscribe(
         requests=['openconfig-network-instance:network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor'],
-        encoding='JSON_IETF',
+        encoding='PROTO',
         sample_rate=5,
         stream_mode='STREAM',
         subscribe_mode='SAMPLE'
