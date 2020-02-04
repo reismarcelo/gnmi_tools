@@ -29,4 +29,3 @@ class GNMIManagerV2(gNMIManager):
             self._connected = True
         except grpc.FutureTimeoutError:
             raise GNMIException(f'Unable to connect to "{self.host}:{self.port}"')
-
