@@ -4,9 +4,10 @@ import grpc
 
 
 class GNMIManagerV2(gNMIManager):
-    def __init__(self, *args, pem=None, **kwargs) -> None:
+    def __init__(self, *args, pem=None, encoding='JSON_IETF', **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.channel = None
+        self.encoding = encoding
         if pem is not None:
             with open(pem, "rb") as fp:
                 self.pem = fp.read()
@@ -29,3 +30,6 @@ class GNMIManagerV2(gNMIManager):
             self._connected = True
         except grpc.FutureTimeoutError:
             raise GNMIException(f'Unable to connect to "{self.host}:{self.port}"')
+
+    def get_config(self, *args, **kwargs):
+        super().get_config(encoding=self.encoding, *args, **kwargs)
