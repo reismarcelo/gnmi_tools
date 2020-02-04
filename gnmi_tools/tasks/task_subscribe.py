@@ -3,12 +3,28 @@
  gnmi_tools.tasks.task_subscribe
  Performs subscribe operation operation
 
- OC model:
-    module: Cisco-IOS-XR-infra-infra-cfg
-      +--rw banners
-         +--rw banner* [banner-name]
-            +--rw banner-name    Banner
-            +--rw banner-text    string
+ Subscriptions model:
+    module: openconfig-network-instance
+      +--rw network-instances
+         +--rw network-instance* [name]
+            +--rw protocols
+               +--rw protocol* [identifier name]
+                  +--rw bgp
+                     +--rw neighbors
+                        +--rw neighbor* [neighbor-address]
+                           +--ro state
+                              +--ro neighbor-address?   oc-inet:ip-address
+
+    module: openconfig-network-instance
+      +--rw network-instances
+         +--rw network-instance* [name]
+            +--rw protocols
+               +--rw protocol* [identifier name]
+                  +--rw bgp
+                     +--rw neighbors
+                        +--rw neighbor* [neighbor-address]
+                           +--ro state
+                              +--ro session-state?   enumeration
 """
 import logging
 import time
@@ -24,7 +40,10 @@ def run(api: GNMIManagerV2):
     logger = logging.getLogger('subscribe')
 
     subs = api.subscribe(
-        requests=['openconfig-network-instance:network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor'],
+        requests=[
+            'openconfig-network-instance:network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/neighbor-address',
+            'openconfig-network-instance:network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state',
+        ],
         encoding='PROTO',
         sample_rate=5,
         stream_mode='STREAM',
