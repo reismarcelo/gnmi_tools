@@ -17,7 +17,7 @@ from gnmi_tools.api_update import GNMIManagerV2
 
 @TaskOptions.register('read_all')
 def run(api: GNMIManagerV2):
-    get_complete, response_list = api.get_config()
+    get_complete, response_list = api.get_config(encoding='JSON_IETF')
     if not get_complete:
         return 'Error on get_config'
 
