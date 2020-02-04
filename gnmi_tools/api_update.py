@@ -32,4 +32,4 @@ class GNMIManagerV2(gNMIManager):
             raise GNMIException(f'Unable to connect to "{self.host}:{self.port}"')
 
     def get_config(self, *args, **kwargs):
-        super().get_config(encoding=self.encoding, *args, **kwargs)
+        super().get_config(self.encoding, *args, **kwargs)
