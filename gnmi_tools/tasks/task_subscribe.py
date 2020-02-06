@@ -21,7 +21,7 @@ from gnmi_tools.utils import TaskOptions
 from gnmi_tools.api_update import GNMIManagerV2
 
 # TIME_BUDGET indicates how many seconds the subscriber will be on the subscription loop
-TIME_BUDGET = 300
+TIME_BUDGET = 120
 
 
 @TaskOptions.register('subscribe')
