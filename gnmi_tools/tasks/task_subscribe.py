@@ -52,5 +52,5 @@ def run(api: GNMIManagerV2):
         logger.info(sample)
         sample_list.append(sample)
 
-    return '\n'.join(sample_list)
+    return 'Subscription samples saved to log.'
 
