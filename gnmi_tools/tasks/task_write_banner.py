@@ -35,5 +35,5 @@ def run(api: GNMIManagerV2):
     if not set_complete:
         return 'Error on set'
 
-    return '\n'.join([f'{response.path}: {UpdateResult.Operation.Value(response.op)}' for response in set_response.response])
+    return '\n'.join([f'{response.path}: {UpdateResult.Operation.Value(int(response.op))}' for response in set_response.response])
 
