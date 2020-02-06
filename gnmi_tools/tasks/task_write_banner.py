@@ -14,6 +14,7 @@ import json
 from gnmi_tools.utils import TaskOptions
 from gnmi_tools.api_update import GNMIManagerV2
 from gnmi_api.responses import ParsedSetRequest
+from gnmi_api.protos.gnmi_pb2 import UpdateResult
 
 
 @TaskOptions.register('write_banner')
@@ -34,5 +35,5 @@ def run(api: GNMIManagerV2):
     if not set_complete:
         return 'Error on set'
 
-    return '\n'.join([f'{response.path}: {response.op}' for response in set_response.response])
+    return '\n'.join([f'{response.path}: {UpdateResult.Operation.Value(response.op)}' for response in set_response.response])
 
